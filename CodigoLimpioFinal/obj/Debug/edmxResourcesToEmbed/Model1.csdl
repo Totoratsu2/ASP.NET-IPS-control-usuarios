@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IPSMejoraTuSaludModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Consulta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Cedula" Type="Int32" Nullable="false" />
+    <Property Name="HoraInicio" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="HoraFinal" Type="DateTime" Precision="0" />
+    <Property Name="MedicoResponsable" Type="Int32" />
+    <Property Name="PacienteSolicitante" Type="Int32" />
+    <NavigationProperty Name="Medico" Relationship="Self.FK__Consulta__Medico__2E1BDC42" FromRole="Consulta" ToRole="Medico" />
+    <NavigationProperty Name="Paciente" Relationship="Self.FK__Consulta__Pacien__2F10007B" FromRole="Consulta" ToRole="Paciente" />
+  </EntityType>
+  <EntityType Name="Medico">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NombreS" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Especialidad" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="SalarioCita" Type="Double" Nullable="false" />
+    <Property Name="AñosExperiencia" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Consultas" Relationship="Self.FK__Consulta__Medico__2E1BDC42" FromRole="Medico" ToRole="Consulta" />
+  </EntityType>
+  <EntityType Name="Paciente">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombres" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Apellidos" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaNto" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Direccion" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Telefono" Type="Int32" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="FechaRegistro" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Consultas" Relationship="Self.FK__Consulta__Pacien__2F10007B" FromRole="Paciente" ToRole="Consulta" />
+  </EntityType>
+  <Association Name="FK__Consulta__Medico__2E1BDC42">
+    <End Role="Medico" Type="Self.Medico" Multiplicity="0..1" />
+    <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medico">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Consulta">
+        <PropertyRef Name="MedicoResponsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Consulta__Pacien__2F10007B">
+    <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
+    <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paciente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Consulta">
+        <PropertyRef Name="PacienteSolicitante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="IPSMejoraTuSaludEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Consultas" EntityType="Self.Consulta" />
+    <EntitySet Name="Medicos" EntityType="Self.Medico" />
+    <EntitySet Name="Pacientes" EntityType="Self.Paciente" />
+    <AssociationSet Name="FK__Consulta__Medico__2E1BDC42" Association="Self.FK__Consulta__Medico__2E1BDC42">
+      <End Role="Medico" EntitySet="Medicos" />
+      <End Role="Consulta" EntitySet="Consultas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Consulta__Pacien__2F10007B" Association="Self.FK__Consulta__Pacien__2F10007B">
+      <End Role="Paciente" EntitySet="Pacientes" />
+      <End Role="Consulta" EntitySet="Consultas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

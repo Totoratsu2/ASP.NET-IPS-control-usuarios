@@ -1,0 +1,58 @@
+﻿@model IEnumerable<CodigoLimpioFinal.Medico>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Especialidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SalarioCita)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AñosExperiencia)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Especialidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SalarioCita)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AñosExperiencia)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Cedula }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Cedula }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Cedula })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IPSMejoraTuSaludModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Consulta">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Cedula" Type="int" Nullable="false" />
+    <Property Name="HoraInicio" Type="date" Nullable="false" />
+    <Property Name="HoraFinal" Type="date" />
+    <Property Name="MedicoResponsable" Type="int" />
+    <Property Name="PacienteSolicitante" Type="int" />
+  </EntityType>
+  <EntityType Name="Medico">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NombreS" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Especialidad" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="SalarioCita" Type="float" Nullable="false" />
+    <Property Name="AñosExperiencia" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Paciente">
+    <Key>
+      <PropertyRef Name="Cedula" />
+    </Key>
+    <Property Name="Cedula" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombres" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Apellidos" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="FechaNto" Type="date" Nullable="false" />
+    <Property Name="Direccion" Type="varchar" MaxLength="64" Nullable="false" />
+    <Property Name="Telefono" Type="int" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="32" Nullable="false" />
+    <Property Name="FechaRegistro" Type="date" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Consulta__Medico__2E1BDC42">
+    <End Role="Medico" Type="Self.Medico" Multiplicity="0..1" />
+    <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Medico">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Consulta">
+        <PropertyRef Name="MedicoResponsable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Consulta__Pacien__2F10007B">
+    <End Role="Paciente" Type="Self.Paciente" Multiplicity="0..1" />
+    <End Role="Consulta" Type="Self.Consulta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Paciente">
+        <PropertyRef Name="Cedula" />
+      </Principal>
+      <Dependent Role="Consulta">
+        <PropertyRef Name="PacienteSolicitante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="IPSMejoraTuSaludModelStoreContainer">
+    <EntitySet Name="Consulta" EntityType="Self.Consulta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Medico" EntityType="Self.Medico" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Paciente" EntityType="Self.Paciente" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Consulta__Medico__2E1BDC42" Association="Self.FK__Consulta__Medico__2E1BDC42">
+      <End Role="Medico" EntitySet="Medico" />
+      <End Role="Consulta" EntitySet="Consulta" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Consulta__Pacien__2F10007B" Association="Self.FK__Consulta__Pacien__2F10007B">
+      <End Role="Paciente" EntitySet="Paciente" />
+      <End Role="Consulta" EntitySet="Consulta" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
